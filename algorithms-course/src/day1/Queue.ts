@@ -9,7 +9,6 @@ export default class Queue<T> {
     private head?: QNode<T>;
     private tail?: QNode<T>;
     
-
     constructor() {
         this.head = this.tail = undefined;
         this.length = 0;
@@ -32,10 +31,15 @@ export default class Queue<T> {
         }
 
         this.length--;
+
         const head = this.head;
         this.head = this.head.next;
 
         head.next = undefined;
+
+        if (this.length === 0) {
+            this.head = this.tail = undefined;
+        }
 
         return head.value;
     }

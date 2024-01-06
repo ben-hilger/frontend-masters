@@ -12,7 +12,7 @@ export default function bs_list(haystack: number[], needle: number): boolean {
         } else if (value > needle) {
             high = mid;
         } else {
-            low = mid - 1;
+            low = mid + 1;
         }
     } while (low < high);
 
