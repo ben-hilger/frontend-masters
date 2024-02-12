@@ -116,7 +116,11 @@ fn main() {
     let green = Color::Green;
     println!("{}", green.is_green());
 
+    println!("---Unwrap practice---");
     println!("{} {}", practice(vec![1, 2, 3], 1), practice(vec![1, 2, 3], 10));
+
+    println!("---Error handling practice---");
+    read_file_error_handling();
 }
 
 fn practice(nums: Vec<usize>, index: usize) -> usize {
@@ -141,4 +145,13 @@ fn print_color(color: Color) {
         Color::Blue => println!("blue"),
         Color::Yellow => println!("yellow")
     }
+}
+
+fn read_file_error_handling() {
+    let file_name = std::env::args().nth(1)
+        .expect("the file name to be passed in");
+    let file = std::fs::read_to_string(file_name)
+        .expect("Unable to read the file to string");
+
+    file.lines().for_each(|line| println!("{}", line));
 }

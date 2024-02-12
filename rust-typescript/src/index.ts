@@ -63,4 +63,20 @@ function practice(nums: number[], index: number): number {
     return (nums[index] ?? index) * 5;
 }
 
+console.log("---default/coalesce practice---");
 console.log(practice([2, 3, 4], 1));
+
+function errorHandling() {
+    const fileName = process.argv[2];
+    if (!fileName) return;
+
+    console.log("---Error handling---")
+    fs.readFileSync(fileName)
+        .toString()
+        .split("\n")
+        .forEach(line => console.log(line))
+}
+
+if (process.argv.length >= 3) {
+    errorHandling();
+}
