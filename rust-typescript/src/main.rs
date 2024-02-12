@@ -81,13 +81,13 @@ fn main() {
         .sum();
     println!("sum value: {}", value);
 
-
     let what_about_this: usize = vec![1, 2, 3]
         .iter()
         .filter(|x| *x % 2 == 0)
         .count();
     println!("what about this: {}", what_about_this);
 
+    println!("---Reading file/enumeration practice---");
     let file = std::fs::read_to_string("lines.txt").unwrap();
 
     file
@@ -108,6 +108,7 @@ fn main() {
         .take(2)
         .for_each(|(_, line)| println!("{}", line));
 
+    println!("---Enum Practice---");
     print_color(Color::Green);
     print_color(Color::Red);
     print_color(Color::Blue);
@@ -125,10 +126,6 @@ fn main() {
 
 fn practice(nums: Vec<usize>, index: usize) -> usize {
     return nums.get(index).unwrap_or(&index) * 5;
-    // if let Some(value) = nums.get(index) {
-    //     return value * 5;
-    // }
-    // return index * 5;
 }
 
 fn multiply_some(num: Option<usize>) -> Option<usize> {
