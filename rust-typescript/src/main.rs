@@ -37,6 +37,7 @@ impl Color {
 }
 
 fn main() {
+    println!("--Collect/Iter Basics---");
     let list: Vec<_> = vec![1, 2, 3]
         .iter()
         .map(|x| x + 1)
@@ -122,6 +123,7 @@ fn main() {
 
     println!("---Error handling practice---");
     read_file_error_handling();
+    read_file_error_handling_to_int();
 }
 
 fn practice(nums: Vec<usize>, index: usize) -> usize {
@@ -151,4 +153,19 @@ fn read_file_error_handling() {
         .expect("Unable to read the file to string");
 
     file.lines().for_each(|line| println!("{}", line));
+}
+
+fn read_file_error_handling_to_int() {
+    let file_name = std::env::args().nth(1)
+        .expect("the file name to be passed in");
+    let file = std::fs::read_to_string(file_name)
+        .expect("Unable to read the file to string");
+
+    file.lines().for_each(|line| {
+        if let Ok(value) = line.parse::<usize>() {
+            println!("{}", value);
+        } else {
+            println!("Line not a number");
+        }
+    });
 }
