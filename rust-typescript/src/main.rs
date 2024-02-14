@@ -36,6 +36,10 @@ impl Color {
     }
 }
 
+struct MyStruct {
+    age: Vec<usize>
+}
+
 fn main() {
     println!("--Collect/Iter Basics---");
     let list: Vec<_> = vec![1, 2, 3]
@@ -124,6 +128,9 @@ fn main() {
     println!("---Error handling practice---");
     read_file_error_handling();
     read_file_error_handling_to_int();
+
+    let mut foo = MyStruct { age: vec![5, 6, 7] };
+    foo.age = vec![2, 4, 5];
 }
 
 fn practice(nums: Vec<usize>, index: usize) -> usize {
