@@ -3,6 +3,8 @@ console.log(list);
 
 import fs from "fs"
 
+console.log("Reading files...");
+
 fs.readFileSync("lines.txt")
     .toString()
     .split("\n")
@@ -27,6 +29,8 @@ enum Color {
     Blue = "blue",
     Yellow = "yellow"
 }
+
+console.log("Printing color enum...");
 
 function printColor(color: Color) {
     console.log(color);
