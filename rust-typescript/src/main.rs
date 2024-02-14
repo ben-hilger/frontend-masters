@@ -40,6 +40,11 @@ struct MyStruct {
     age: Vec<usize>
 }
 
+#[derive(Debug)]
+struct CountItem {
+    count: usize
+}
+
 fn main() {
     println!("--Collect/Iter Basics---");
     let list: Vec<_> = vec![1, 2, 3]
@@ -131,6 +136,33 @@ fn main() {
 
     let mut foo = MyStruct { age: vec![5, 6, 7] };
     foo.age = vec![2, 4, 5];
+
+    println!("---Borrow checker practice---");
+    let mut item = CountItem { count: 1 };
+    println!("{:?}", item);
+    add_one(&mut item);
+    println!("{:?}", item);
+
+    let mut items = vec![CountItem { count: 1}];
+    let first = items.first_mut();
+    println!("{:?}", first);
+
+    print_all(&items);
+
+    let first = items.get_mut(0);
+    println!("{:?}", first);
+    let second = items.get_mut(1);
+    println!("{:?}", second);
+}
+
+fn print_all(items: &Vec<CountItem>) {
+    for item in items {
+        println!("{:?}", item);
+    }
+}
+
+fn add_one(item: &mut CountItem) {
+    item.count += 1;
 }
 
 fn practice(nums: Vec<usize>, index: usize) -> usize {
