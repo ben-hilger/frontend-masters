@@ -1,4 +1,8 @@
+mod shapes;
 use std::collections::{HashMap, HashSet};
+use crate::shapes::area::Area;
+use crate::shapes::circle::Circle;
+use crate::shapes::rect::Rectangle;
 
 struct Custom {
     age: usize,
@@ -39,6 +43,7 @@ impl Color {
 struct MyStruct {
     age: Vec<usize>
 }
+
 
 #[derive(Debug)]
 struct CountItem {
@@ -131,8 +136,8 @@ fn main() {
     println!("{} {}", practice(vec![1, 2, 3], 1), practice(vec![1, 2, 3], 10));
 
     println!("---Error handling practice---");
-    read_file_error_handling();
-    read_file_error_handling_to_int();
+    // read_file_error_handling();
+    // read_file_error_handling_to_int();
 
     let mut foo = MyStruct { age: vec![5, 6, 7] };
     foo.age = vec![2, 4, 5];
@@ -153,6 +158,19 @@ fn main() {
     println!("{:?}", first);
     let second = items.get_mut(1);
     println!("{:?}", second);
+
+    let rect = Rectangle::default();
+
+    let circ = Circle {
+        x: 0.0,
+        y: 0.0,
+        radius: 10.0
+    };
+
+    println!("{}", circ.area());
+    println!("{}", rect.area());
+    println!("{}", 1.345.area());
+    println!("{}", rect);
 }
 
 fn print_all(items: &Vec<CountItem>) {
