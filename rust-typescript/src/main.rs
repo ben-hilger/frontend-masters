@@ -1,7 +1,10 @@
 mod shapes;
 use std::collections::{HashMap, HashSet};
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 use crate::shapes::area::Area;
 use crate::shapes::circle::Circle;
+use crate::shapes::collisions::{Collidable, Contains, PointIter, Points};
 use crate::shapes::rect::Rectangle;
 
 struct Custom {
@@ -136,8 +139,8 @@ fn main() {
     println!("{} {}", practice(vec![1, 2, 3], 1), practice(vec![1, 2, 3], 10));
 
     println!("---Error handling practice---");
-    // read_file_error_handling();
-    // read_file_error_handling_to_int();
+    read_file_error_handling();
+    read_file_error_handling_to_int();
 
     let mut foo = MyStruct { age: vec![5, 6, 7] };
     foo.age = vec![2, 4, 5];
@@ -171,6 +174,101 @@ fn main() {
     println!("{}", rect.area());
     println!("{}", 1.345.area());
     println!("{}", rect);
+
+    // for point in rect {
+    //
+    // }
+
+    println!("{}", rect);
+
+    let rect2 = Rectangle::default();
+    let circle = Circle {
+        x: 0.0,
+        y: 0.0,
+        radius: 1.0
+    };
+    let circle2 = Circle {
+        x: 1.5,
+        y: 1.5,
+        radius: 4.0
+    };
+
+    rect.collide(&rect2);
+    circle.collide(&circle2);
+    rect.collide(&circle);
+
+    println!("---Reading shapes from a file---");
+    let _ = read_shapes_from_file();
+}
+
+
+enum Shape {
+    Circle(Circle),
+    Rectangle(Rectangle),
+}
+
+impl Display for Shape {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        return match self {
+            Shape::Circle(c) => write!(f, "{}", c),
+            Shape::Rectangle(r) => write!(f, "{}", r),
+        }
+    }
+}
+
+impl FromStr for Shape {
+    type Err = anyhow::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let (shape, data) = s.split_once(" ").unwrap_or(("", ""));
+
+        return match shape {
+            "rect" => Ok(Shape::Rectangle(data.parse()?)),
+            "circle" => Ok(Shape::Circle(data.parse()?)),
+            _ => Err(anyhow::anyhow!("Bad shape"))
+        }
+    }
+}
+
+impl Points for &Shape {
+    fn points(&self) -> PointIter {
+        return match self {
+            Shape::Circle(c) => c.points(),
+            Shape::Rectangle(r) => r.points(),
+        }
+    }
+}
+
+impl Contains for &Shape {
+    fn contains_point(&self, point: (f64, f64)) -> bool {
+        return match self {
+            Shape::Circle(c) => c.contains_point(point),
+            Shape::Rectangle(r) => r.contains_point(point),
+        }
+    }
+}
+
+use anyhow::Result;
+
+fn read_shapes_from_file() -> Result<()> {
+
+    let shapes = std::fs::read_to_string("shapes")?
+        .lines()
+        .filter_map(|x| x.parse::<Shape>().ok())
+        .collect::<Vec<_>>();
+
+    shapes
+        .iter()
+        .skip(1)
+        .zip(shapes
+            .iter()
+            .take(shapes.len() - 1))
+        .filter(|(a, b)| a.collide(b))
+        .for_each(|(a,b )| {
+            println!("{} collides with {}", a, b);
+        });
+
+    return Ok(());
 }
 
 fn print_all(items: &Vec<CountItem>) {
