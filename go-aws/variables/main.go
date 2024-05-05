@@ -2,7 +2,7 @@ package variables
 
 import "fmt"
 
-func Main() {
+func Vars() {
 	var myName string = "ben"
 
 	fmt.Printf("Hello my name is %s\n", myName)

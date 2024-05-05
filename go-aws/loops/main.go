@@ -5,7 +5,7 @@ import (
 	"slices"
 )
 
-func Main() {
+func Loops() {
 	animals := [2]string{}
 
 	animals[0] = "dog"
