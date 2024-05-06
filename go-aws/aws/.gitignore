@@ -19,3 +19,5 @@
 cdk.out
 
 bootstrap
+function.zip
+.env
